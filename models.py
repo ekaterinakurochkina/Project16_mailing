@@ -29,8 +29,9 @@ class Message(models.Model):          #   Сообщение
         ordering = ['subject']
 
 class Sending(models.Model):           # Рассылка
-    first_sending = models.DateTimeField(auto_now_add=True)              # Дата и время первой отправки
-    end_sending = models.DateTimeField(auto_created=True, null=True, blank=True)               # Дата и время окончания отправки
+    name = models.CharField(max_length=100, verbose_name="Название рассылки")
+    start_sending = models.DateTimeField(auto_now_add=True, verbose_name="Дата и время начала рассылки")              # Дата и время первой отправки
+    end_sending = models.DateTimeField(verbose_name="Дата и время окончания рассылки", null=True, blank=True)               # Дата и время окончания отправки
     STATUS_CHOICES = [
         ('created', 'Создана'),
         ('launched', 'Запущена'),
@@ -43,7 +44,7 @@ class Sending(models.Model):           # Рассылка
     owner = models.ForeignKey(User, verbose_name="Владелец", help_text="Укажите владельца рассылки", blank=True, null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
-        return self.status
+        return self.name
 
     class Meta:
         verbose_name = 'Рассылка'

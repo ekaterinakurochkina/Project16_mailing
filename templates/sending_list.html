@@ -1,10 +1,57 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'catalog/base.html' %}
+{% load my_tags %}
+{% block content %}
 
-</body>
-</html>
+<p></p>
+<p></p>
+
+<a class="btn btn-primary w-30" role="button" href="{% url 'mailing:sending_list' %}">Все товары</a>
+<a class="btn btn-secondary w-30" role="button" href="{% url 'catalog:product_list_from_category' pk=1 %}">Бытовая техника</a>
+<a class="btn btn-secondary w-30" role="button" href="{% url 'catalog:product_list_from_category' pk=2 %}">Косметика и парфюмерия</a>
+<a class="btn btn-secondary w-30" role="button" href="{% url 'catalog:product_list_from_category' pk=3 %}">Спортивные товары</a>
+
+
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        {% for product in object_list %}
+
+          <div class="col">
+            <div class="card shadow-sm">
+              <div class="card-image">
+                <img src="{{ product.image | media_filter }}" alt="{{ product.name }}" class="img-fluid">
+              </div>
+              <div class="card-body">
+                <p class="card-text">{{ product.name }}</p>
+                {% if product.is_published == True %} <!-- для опубликованных товаров будет зеленое ДА -->
+                  <span>Товар опубликован: </span>
+                    <span>
+                      <p style="color: green;">Да</p>
+                    </span>
+                {% else %}
+                  <span>Товар опубликован: </span>
+                    <span>
+                      <p style="color: red;">Нет</p> <!-- для неопубликованных товаров будет крастное НЕТ -->
+                    </span>
+                {% endif %}
+                <p class="card-text">Владелец: {{ product.owner }}</p>
+                <!-- <p class="card-text">{{ product.description | truncatechars:100 }}</p> -->
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group">
+                    {% if user.is_authenticated %} <!-- для зареганых пользователей будет видна кнопка Подробнее  -->
+                    <a class="btn btn-primary" role="button" href="{% url 'catalog:product_detail' product.pk %}">Подробнее</a>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+
+
+{% endblock %}l>

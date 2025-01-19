@@ -1,7 +1,6 @@
-from xmlrpc.client import Boolean
 from django.db.models import BooleanField
 from django import forms
-from .models import Sending, Message
+from .models import Sending, Message, MailingRecipient
 from django.core.exceptions import ValidationError
 
 # forbidden = ['казино', 'криптовалюта', 'крипта', 'биржа',
@@ -14,15 +13,32 @@ class StyleFormMixin:
             if isinstance(field, BooleanField):
                 field.widget.attrs['class']="form-check-input"
             else:
-                field.widget.attrs['class'] = "form-class"
+                field.widget.attrs["class"] = "form-class"
                 field.widget.attrs["placeholder"] = field.label
 
 
 class SendingForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = Sending
-        fields = ['status', 'recipient', 'message','owner']
+        fields = ["name", "status", "recipient", "message","owner"]
 #         exclude = ['created_at', 'updated_at']
+
+class SendingModeratorForm(StyleFormMixin, forms.ModelForm):   # Класс для отображения сообщений для модератора
+    class Meta:
+        model = Sending
+        fields = ["name", "status", "recipient", "message","owner", "start_sending", "end_sending", ""]
+
+class MessageForm(StyleFormMixin, forms.ModelForm):
+    class Meta:
+        model = Message
+        fields = ['subject', 'message_body']
+
+
+class MailingRecipientForm(StyleFormMixin, forms.ModelForm):
+    class Meta:
+        model = MailingRecipient
+        fields = ['email', 'name']
+
 
 
 # class ProductForm(StyleFormMixin, forms.ModelForm):
