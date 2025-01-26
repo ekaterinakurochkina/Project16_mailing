@@ -1,10 +1,15 @@
 from http.client import responses
 
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, redirect
+from django.views.generic import View
 from django.core.mail import send_mail
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 from config.settings import CACHE_ENABLED
 from mailing.models import MailingRecipient, Message, Sending, MailingAttempt
 from django.core.cache import cache
+from django.http import HttpResponseForbidden
+from users.models import User
 
 
 def get_object_from_cache():
@@ -42,3 +47,28 @@ def send_mailing(mailing):
             status=status,
             response=response
         )
+
+class InactivateSending(LoginRequiredMixin, View):
+    def post(self,request, sending_id):
+        sending = get_object_or_404(Sending, id=sending_id)
+
+        if not request.user.has_perm('can_canceled_sending'):
+            return HttpResponseForbidden('У вас нет прав для блокировки рассылки')
+
+        sending.status = 'canceled'
+        sending.save()
+
+        return redirect('mailing:sending_list')
+
+
+class InactivateUser(LoginRequiredMixin, View):
+    def post(self, request, user_id):
+        user = get_object_or_404(User, id=user_id)
+
+        if not request.user.has_perm('can_inactivate'):
+            return HttpResponseForbidden('У вас нет прав для блокировки рассылки')
+
+        user.is_active = False
+        user.save()
+
+        return redirect('mailing:sending_list')
