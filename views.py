@@ -28,6 +28,13 @@ class SendingListView(LoginRequiredMixin, ListView):
     template_name = "sending_list.html"
     context_object_name = "sendings"
 
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["total_sendings"] = Sending.object.count()
+        context["active_sendings"] = Sending.object.filter(status="Запущена").count()
+        context["unique_recipients"] = MailingRecipient.object.distinct().count()
+        return context
+
     def get_queryset(self):
         user = self.request.user
         if user.has_perm("mailing.can_canceled_sending"):
@@ -37,6 +44,7 @@ class SendingListView(LoginRequiredMixin, ListView):
 
 class SendingDetailView(LoginRequiredMixin, DetailView):
     model = Sending
+    template_name = "sending_detail.html"
 #     надо дописать!
 
 class SendingUpdateView(LoginRequiredMixin, UpdateView):

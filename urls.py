@@ -1,7 +1,6 @@
 from django.core.cache import cache
 
 from django.urls import path
-from . import views
 from django.contrib import admin
 from mailing.apps import MailingConfig
 from mailing.views import SendingCreateView, SendingDeleteView, SendingUpdateView,SendingListView, SendingDetailView, SendingServiceView
@@ -15,7 +14,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',SendingListView.as_view(), name='product_list'),
     # path('catalog/<int:pk>',cache_page(60)(ProductDetailView.as_view(), name='product_detail')),
-    path('catalog/<int:pk>',ProductDetailView.as_view(), name='sending_detail'),
+    path('catalog/<int:pk>',SendingDetailView.as_view(), name='sending_detail'),
     path('catalog/new/',SendingCreateView.as_view(), name='sending_create'),
     path('catalog/<int:pk>/edit/',SendingUpdateView.as_view(), name='sending_edit'),
     path('catalog/<int:pk>/delete/',SendingDeleteView.as_view(), name='sending_delete'),

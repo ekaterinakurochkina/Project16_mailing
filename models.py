@@ -29,9 +29,10 @@ class Message(models.Model):          #   Сообщение
         ordering = ['subject']
 
 class Sending(models.Model):           # Рассылка
-    name = models.CharField(max_length=100, verbose_name="Название рассылки")
-    start_sending = models.DateTimeField(auto_now_add=True, verbose_name="Дата и время начала рассылки")              # Дата и время первой отправки
-    end_sending = models.DateTimeField(verbose_name="Дата и время окончания рассылки", null=True, blank=True)               # Дата и время окончания отправки
+    # name = models.CharField(max_length=100, verbose_name="Название рассылки")
+    id = models.AutoField(primary_key=True)
+    start_sending = models.DateTimeField(auto_now_add=True, verbose_name='Дата и время начала рассылки')              # Дата и время первой отправки
+    end_sending = models.DateTimeField(verbose_name='Дата и время окончания рассылки', null=True, blank=True)               # Дата и время окончания отправки
     STATUS_CHOICES = [
         ('created', 'Создана'),
         ('launched', 'Запущена'),
@@ -41,7 +42,7 @@ class Sending(models.Model):           # Рассылка
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='created')           # статус
     message = models.ForeignKey(Message, on_delete=models.PROTECT)           # Сообщение (внешн.ключ на модель Сообщение)
     recipient = models.ManyToManyField(MailingRecipient)                      # Получатели (связь с моделью Получатель)
-    owner = models.ForeignKey(User, verbose_name="Владелец", help_text="Укажите владельца рассылки", blank=True, null=True, on_delete=models.SET_NULL)
+    owner = models.ForeignKey(User, verbose_name='Владелец', help_text='Укажите владельца рассылки', blank=True, null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
         return self.name
@@ -51,7 +52,7 @@ class Sending(models.Model):           # Рассылка
         verbose_name_plural = 'Рассылки'
         ordering = ['status']
         permissions = [
-            ("can_canceled_sending", "Can canceled sending")
+            ('can_canceled_sending', 'Can canceled sending')
         ]
 
 
