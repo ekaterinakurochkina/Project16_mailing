@@ -25,28 +25,28 @@ def get_object_from_cache():
     return sendings             # и выдаем пользователю
 
 
-def send_mailing(mailing):
-    for recipient in mailing.recipients.all():
-        try:
-            send_mail(
-                mailing.message.subject,
-                mailing.message.message_body,
-                'From-garden@yandex.ru',
-                [recipient.email],
-            )
-            status = 'Успешно'
-            response = 'Сообщение отправлено'
-        except Exception as e:
-            status = 'Не успешно'
-            response = str(e)
-
-        # Создаем попытку отправки рассылки
-        MailingAttempt.objects.create(
-            mailing=mailing,
-            recipient=recipient,
-            status=status,
-            response=response
-        )
+# def send_mailing(mailing):
+#     for recipient in mailing.recipients.all():
+#         try:
+#             send_mail(
+#                 mailing.message.subject,
+#                 mailing.message.message_body,
+#                 'From-garden@yandex.ru',
+#                 [recipient.email],
+#             )
+#             status = 'successfully'
+#             response = 'Сообщение отправлено'
+#         except Exception as e:
+#             status = 'unsuccessful'
+#             response = str(e)
+#
+#         # Создаем попытку отправки рассылки
+#         MailingAttempt.objects.create(
+#             mailing=mailing,
+#             recipient=recipient,
+#             status=status,
+#             response=response
+#         )
 
 class InactivateSending(LoginRequiredMixin, View):
     def post(self,request, sending_id):

@@ -186,8 +186,8 @@
         <p>Уникальных получателей: {{ unique_recipients }}</p>
         <div class="d-flex justify-content-between align-items-center">
           <div class="btn-group">
-            <a class="btn btn-primary" role="button" href="{% url 'mailing:sending_list' %}">Получатели</a>
-            <a class="btn btn-primary" role="button" href="{% url 'mailing:sending_list'  %}">Сообщения</a>
+            <a class="btn btn-primary" role="button" href="{% url 'mailing:recipient_list' %}">Получатели</a>
+            <a class="btn btn-primary" role="button" href="{% url 'mailing:message_list'  %}">Сообщения</a>
             <a class="btn btn-primary" role="button" href="{% url 'mailing:sending_list'  %}">Рассылки</a>
             {% if perms.users.can_inactivate %}
               <a class="btn btn-primary" role="button" href="{% url 'mailing:sending_list'  %}">Пользователи</a>
