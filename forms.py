@@ -20,7 +20,7 @@ class StyleFormMixin:
 class SendingForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = Sending
-        fields = ["id", "name", "status", "recipient", "message"]
+        fields = ["id", "status", "recipient", "message"]
 #         exclude = ['created_at', 'updated_at']
 
     def create_owner(self):
@@ -30,7 +30,7 @@ class SendingForm(StyleFormMixin, forms.ModelForm):
 class SendingModeratorForm(StyleFormMixin, forms.ModelForm):   # Класс для отображения сообщений для модератора
     class Meta:
         model = Sending
-        fields = ["id", "name", "status", "recipient", "message","owner", "start_sending", "end_sending"]
+        fields = ["id", "status", "recipient", "message","owner", "start_sending", "end_sending"]
 
 class MessageForm(StyleFormMixin, forms.ModelForm):
     class Meta:

@@ -31,7 +31,7 @@ class Message(models.Model):          #   Сообщение
 class Sending(models.Model):           # Рассылка
     # name = models.CharField(max_length=100, verbose_name="Название рассылки")
     id = models.AutoField(primary_key=True)
-    start_sending = models.DateTimeField(auto_now_add=True, verbose_name='Дата и время начала рассылки')              # Дата и время первой отправки
+    start_sending = models.DateTimeField(verbose_name='Дата и время начала рассылки')              # Дата и время первой отправки
     end_sending = models.DateTimeField(verbose_name='Дата и время окончания рассылки', null=True, blank=True)               # Дата и время окончания отправки
     STATUS_CHOICES = [
         ('created', 'Создана'),
