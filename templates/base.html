@@ -1,5 +1,6 @@
 <!doctype html>
 {% load static %}
+
 <html lang="en" data-bs-theme="auto">
   <head><script src="{% static 'js/color-modes.js' %}"></script>
 
@@ -163,7 +164,7 @@
 
 
 <header data-bs-theme="dark">
-  {% include 'mailing/includes/inc_menu.html' %}
+  {% include 'includes/inc_menu.html' %}
 </header>
 
 <main>
@@ -186,9 +187,9 @@
         <p>Уникальных получателей: {{ unique_recipients }}</p>
         <div class="d-flex justify-content-between align-items-center">
           <div class="btn-group">
-            <a class="btn btn-primary" role="button" href="{% url 'mailing:recipient_list' %}">Получатели</a>
-            <a class="btn btn-primary" role="button" href="{% url 'mailing:message_list'  %}">Сообщения</a>
-            <a class="btn btn-primary" role="button" href="{% url 'mailing:sending_list'  %}">Рассылки</a>
+            <a class="btn btn-primary" role="button" href="#">Получатели</a>
+            <a class="btn btn-primary" role="button" href="#">Сообщения</a>
+            <a class="btn btn-primary" role="button" href="#">Рассылки</a>
             {% if perms.users.can_inactivate %}
               <a class="btn btn-primary" role="button" href="{% url 'mailing:sending_list'  %}">Пользователи</a>
             {% endif %}
@@ -208,7 +209,7 @@
 <footer class="text-body-secondary py-5">
   <div class="container">
     <p class="float-end mb-1">
-      <a href="#">Back to top</a>
+      <a href="#">Наверх</a>
     </p>
 
   </div>

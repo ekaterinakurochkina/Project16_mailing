@@ -30,9 +30,9 @@ class SendingListView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["total_sendings"] = Sending.object.count()
-        context["active_sendings"] = Sending.object.filter(status="Запущена").count()
-        context["unique_recipients"] = MailingRecipient.object.distinct().count()
+        context["total_sendings"] = Sending.objects.count()
+        context["active_sendings"] = Sending.objects.filter(status="Запущена").count()
+        context["unique_recipients"] = MailingRecipient.objects.distinct().count()
         return context
 
     def get_queryset(self):
