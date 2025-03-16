@@ -1,5 +1,5 @@
 from django.views.generic.edit import DeleteView, CreateView, UpdateView
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, TemplateView
 from .forms import SendingForm, SendingModeratorForm
 from .models import MailingRecipient, Message, Sending, MailingAttempt
 from django.urls import reverse_lazy
@@ -7,6 +7,16 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from mailing.service import get_object_from_cache
 
+
+class HomePageView(TemplateView):
+    template_name = "home.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["total_sendings"] = Sending.objects.count()
+        context["active_sendings"] = Sending.objects.filter(status="Запущена").count()
+        context["unique_recipients"] = MailingRecipient.objects.distinct().count()
+        return context
 
 class SendingCreateView(LoginRequiredMixin, CreateView):
     model = Sending
