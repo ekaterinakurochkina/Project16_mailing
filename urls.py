@@ -12,5 +12,7 @@ urlpatterns = [
     path('sending/new/',SendingCreateView.as_view(), name='sending_create'),
     path('sending/<int:pk>/edit/',SendingUpdateView.as_view(), name='sending_edit'),
     path('sending/<int:pk>/delete/',SendingDeleteView.as_view(), name='sending_delete'),
-
+    path('recipient/list',SendingListView.as_view(), name='recipient_list'),
+    path('message/list',SendingListView.as_view(), name='message_list'),
 ]
+
