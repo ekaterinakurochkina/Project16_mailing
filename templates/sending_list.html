@@ -1,9 +1,21 @@
 {% extends 'base.html' %}
-{% block title %} Список рассылок {% endblock %}
+<title>Список рассылок</title>
 {% block content %}
+<div class="container-fluid">
+<main>
+      <section class="text-center container">
+        <div class="row py-lg-0">
+          <div class="col-lg-6 col-md-8 mx-auto">
+            <h1 class="fw-light">Список рассылок</h1>
 
+          </div>
+        </div>
+  </section>
+</main>
+</div>
 <div style="text-align: center; margin-top: 0px; margin-bottom: 30px;">
-  <button style="width: 540px; background-color: #4CAF50; color: white; padding: 10px 10px; border: none; border-radius: 4px; cursor: pointer;">Добавить рассылку</button>
+  <a class="btn" button style="width: 540px; background-color: #4CAF50; color: white; padding: 10px 10px; border: none; border-radius: 4px; cursor: pointer" href="{% url 'mailing:sending_create' %}">Добавить рассылку</a>
+
 </div>
 
           <table>
@@ -16,7 +28,7 @@
                 <th style="background-color: #f2f2f2;">Окончание</th>
                 <th style="background-color: #f2f2f2;">Статус</th>
                 <th style="background-color: #f2f2f2;">Тема сообщения</th>
-                <th style="background-color: #f2f2f2;"></th>
+                <th style="background-color: #f2f2f2;">Детали</th>
               </tr>
             </thead>
             <tbody>
@@ -41,64 +53,13 @@
     </div>
   </div>
 
+<p></p>
 
+
+<div style="text-align: center; margin-top: 0px; margin-bottom: 30px;">
+  <a class="btn btn-primary " button style="width: 540px; color: white; padding: 10px 10px; border: none; border-radius: 4px; cursor: pointer" href="{% url 'mailing:home' %}">На главную</a>
+
+</div>
 
 {% endblock %}l>
 
-
-
-<!--<div class="container marketing mt-5">-->
-<!--    <div class="container text-center mt-3">-->
-<!--        <div class="row justify-content-center">-->
-<!--            <div class="col-4">-->
-
-<!--            </div>-->
-<!--            <div class="col-4">-->
-<!--                <h2>Сообщения</h2>-->
-<!--                <a class="btn btn-success mt-3" href="{% url 'mailing:message_create' %}">Добавить сообщение-->
-<!--                    &raquo;</a></p>-->
-<!--            </div>-->
-<!--            <div class="col-4">-->
-
-<!--            </div>-->
-<!--        </div>-->
-
-<!--    </div>-->
-<!--    <div class="row">-->
-<!--        <div class="table-responsive small">-->
-<!--            <table class="table table-success table-striped">-->
-<!--                <thead>-->
-<!--                <tr>-->
-<!--                    <th>Тема</th>-->
-<!--                    <th>Сообщение</th>-->
-<!--                    {% if request.user.is_superuser %}-->
-<!--                    <th>Создал</th>-->
-<!--                    {% endif %}-->
-<!--                    <th>Действия</th>-->
-<!--                </tr>-->
-<!--                </thead>-->
-
-<!--                {% for object in object_list %}-->
-<!--                <tr>-->
-<!--                    <td>{{ object.subject }}</td>-->
-<!--                    <td>{{ object.content|truncatechars:30 }}</td>-->
-<!--                    {% if request.user.is_superuser %}-->
-<!--                    <td>{{ object.owner }}</td>-->
-<!--                    {% endif %}-->
-<!--                    <td>-->
-<!--                        <a class="btn btn-primary btn-sm" href="{% url 'mailing:message_detail' object.pk%}">Посмотреть-->
-<!--                            &raquo;</a>-->
-<!--                        <a class="btn btn-primary btn-sm" href="{% url 'mailing:message_update' object.pk%}">Редактировать-->
-<!--                            &raquo;</a>-->
-<!--                        <a class="btn btn-danger btn-sm" href="{% url 'mailing:message_delete' object.pk%}">Удалить</a>-->
-<!--                    </td>-->
-
-<!--                </tr>-->
-<!--                {% endfor%}-->
-<!--            </table>-->
-
-<!--        </div>&lt;!&ndash; /.row &ndash;&gt;-->
-
-
-<!--    </div>&lt;!&ndash; /.row &ndash;&gt;-->
-<!--</div>&lt;!&ndash; /.container &ndash;&gt;-->

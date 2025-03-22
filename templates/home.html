@@ -1,5 +1,6 @@
-<!doctype html>
+{% extends 'base.html' %}
 {% load static %}
+
 
 <html lang="en" data-bs-theme="auto">
   <head><script src="{% static 'js/color-modes.js' %}"></script>
@@ -9,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.122.0">
-    <title>Главная страница</title>
+<title>Главная страница</title>
 
 <!--    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/album/">-->
 
@@ -167,21 +168,35 @@
   {% include 'includes/inc_menu.html' %}
 </header>
 
-<main>
 
-  <section class="py-5 text-center container">
+{% block content %}
+<div class="container-fluid">
+<main>
+      <section class="text-center container">
+        <div class="row py-lg-0">
+          <div class="col-lg-6 col-md-8 mx-auto">
+            <h1 class="fw-light">Сервис рассылок</h1>
+            <p class="lead text-body-secondary">Сделайте рассылку своим клиентам легкой и удобной!</p>
+
+            {% if user.is_authenticated %}
+              <p> Добро пожаловать, {{user.email}}!</p>
+            {% else %}
+              <p> Добро пожаловать!</p>
+            {% endif %}
+
+          </div>
+        </div>
+  </section>
+</main>
+</div>
+
+    <main>
+  <section class="py-0 text-center container">
     <div class="row py-lg-5">
       <div class="col-lg-6 col-md-8 mx-auto">
-        <h1 class="fw-light">Сервис рассылок</h1>
-        <p class="lead text-body-secondary">Сделайте рассылку своим клиентам легкой и удобной!</p>
-
-        {% if user.is_authenticated %}
-          <p> Добро пожаловать, {{user.email}}!</p>
-        {% else %}
-          <p> Добро пожаловать!</p>
-        {% endif %}
 
      {% if user.is_authenticated %} <!-- для зареганых пользователей будет видна кнопка создания рассылок -->
+        <section class="py-2 text-center container">
         <p>Всего рассылок:{{ total_sendings }}</p>
         <p>Активных рассылок: {{ active_sendings }}</p>
         <p>Уникальных получателей: {{ unique_recipients }}</p>
@@ -195,28 +210,26 @@
             <p></p>
             <a class="btn btn-primary me-2" button style="width: 200px;" role="button" href="{% url 'mailing:sending_list' %}">Рассылки</a>
             <p></p>
-            <a class="btn btn-primary" button style="width: 200px;" role="button" href="{% url 'mailing:recipient_list' %}">Пользователи</a>
-
-
+            <a class="btn btn-primary" button style="width: 200px;" role="button" href="{% url 'users:user_list' %}">Пользователи</a>
         </div>
+
         {% else %}
+
         <div class="d-flex justify-content-between align-items-center">
-          <div class="btn-group">
             <a class="btn btn-primary me-2" role="button" href="#">Получатели</a>
             <a class="btn btn-primary me-2" role="button" href="#">Сообщения</a>
             <a class="btn btn-primary me-2" role="button" href="#">Рассылки</a>
-          </div>
         </div>
+
       {% endif %}
     {% endif %}
       </div>
     </div>
   </section>
-{% block content %}
-
+</main>
 {% endblock %}
 
-</main>
+
 
 <footer class="text-body-secondary py-5">
   <div class="container">

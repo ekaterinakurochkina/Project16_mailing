@@ -1,5 +1,5 @@
 from django.db.models import BooleanField
-from django import forms
+from django.forms import ModelForm
 from .models import Sending, Message, MailingRecipient
 from django.core.exceptions import ValidationError
 
@@ -13,32 +13,30 @@ class StyleFormMixin:
             if isinstance(field, BooleanField):
                 field.widget.attrs['class']="form-check-input"
             else:
-                field.widget.attrs["class"] = "form-class"
+                field.widget.attrs["class"] = "form-control"
                 field.widget.attrs["placeholder"] = field.label
 
 
-class SendingForm(StyleFormMixin, forms.ModelForm):
+class SendingForm(StyleFormMixin, ModelForm):
     class Meta:
         model = Sending
-        fields = ["id", "status", "recipient", "message"]
-#         exclude = ['created_at', 'updated_at']
-
+        fields = "__all__"
     def create_owner(self):
         owner = self.request.user
         return owner
 
-class SendingModeratorForm(StyleFormMixin, forms.ModelForm):   # Класс для отображения сообщений для модератора
+class SendingModeratorForm(StyleFormMixin, ModelForm):   # Класс для отображения сообщений для модератора
     class Meta:
         model = Sending
         fields = ["id", "status", "recipient", "message","owner", "start_sending", "end_sending"]
 
-class MessageForm(StyleFormMixin, forms.ModelForm):
+class MessageForm(StyleFormMixin, ModelForm):
     class Meta:
         model = Message
         fields = ['subject', 'message_body']
 
 
-class MailingRecipientForm(StyleFormMixin, forms.ModelForm):
+class MailingRecipientForm(StyleFormMixin, ModelForm):
     class Meta:
         model = MailingRecipient
         fields = ['email', 'name']
